@@ -1,5 +1,4 @@
-import { getColumn, getSquareOfTile } from './utils';
-import { createMockEasySudoku } from '../tests/mocks';
+import { createMockEasySudoku, getColumn, getSquareOfTile } from './utils';
 import type { DetailedBoard } from './types';
 
 describe('utils', () => {
