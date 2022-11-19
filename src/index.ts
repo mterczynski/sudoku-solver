@@ -102,7 +102,9 @@ function handleFillFromJSON(): void {
 
   button?.addEventListener('click', async () => {
     const defaultPromptValue = JSON.stringify(Array(boardSize).fill(0).map(() => Array(boardSize).fill(0)));
-    const userInput = JSON.parse(window.prompt(`The input accepts ${boardSize}x${boardSize} array of numbers`, defaultPromptValue)!);
+    const promptResult = window.prompt(`The input accepts ${boardSize}x${boardSize} array of numbers`, defaultPromptValue)!
+    const filteredPromptResult = promptResult.replace(/\n/g, '').replace(/\r/g, '')
+    const userInput = JSON.parse(filteredPromptResult);
 
     const schema = Joi.array().length(boardSize).items(
       Joi.array().length(boardSize).items(
