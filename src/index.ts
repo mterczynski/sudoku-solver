@@ -1,6 +1,6 @@
 import Joi from "joi";
 import _ from "lodash";
-import { check3x3Squares, checkColumns, checkRows } from "./solvers";
+import { check3x3Squares as solve3x3Squares, checkColumns as solveColumns, solveRows } from "./solvers";
 import type { DetailedBoard } from "./types";
 import { boardSize, createMockEasySudoku } from "./utils";
 import JSON5 from 'json5'
@@ -68,14 +68,14 @@ function provideSolution(inputData: number[][]): { detailedSolution: DetailedBoa
   }));
 
   function recursivelyCheckForNewDiscoveries() {
-    const check3x3SquaresResult = check3x3Squares(detailedBoard);
-    const checkRowsResult = checkRows(detailedBoard);
-    const checkColumnsResult = checkColumns(detailedBoard);
+    const solve3x3SquaresResult = solve3x3Squares(detailedBoard);
+    const solveRowsResult = solveRows(detailedBoard);
+    const solveColumnsResult = solveColumns(detailedBoard);
 
     const progress = [
-      check3x3SquaresResult,
-      checkRowsResult,
-      checkColumnsResult
+      solve3x3SquaresResult,
+      solveRowsResult,
+      solveColumnsResult
     ];
 
     if (progress.some(Boolean)) {

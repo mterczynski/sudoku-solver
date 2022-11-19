@@ -1,8 +1,8 @@
-import { checkRows } from "./solvers"
+import { solveRows } from "./solvers"
 import { createEmptyDetailedBoard } from "./testUtils"
 
 describe('solvers', () => {
-  describe('checkRows', () => {
+  describe('solveRows', () => {
     it('solves rows', () => {
       const mockDetailedBoard = createEmptyDetailedBoard()
 
@@ -11,7 +11,7 @@ describe('solvers', () => {
         mockDetailedBoard[0][i].possibleValues = []
       }
 
-      const checkResult = checkRows(mockDetailedBoard)
+      const checkResult = solveRows(mockDetailedBoard)
 
       expect(checkResult).toEqual(true)
       expect(mockDetailedBoard[0][8].value).toEqual(9)

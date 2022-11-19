@@ -21,7 +21,7 @@ export function check3x3Squares(board: DetailedBoard): boolean {
   return wasAnyProgressMade;
 }
 
-export function checkRows(board: DetailedBoard): boolean {
+export function solveRows(board: DetailedBoard): boolean {
   let wasAnyProgressMade = board
     .map((row) => updateTiles(row))
     .some(({ wasAnyProgressMade }) => wasAnyProgressMade);
