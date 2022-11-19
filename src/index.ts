@@ -56,8 +56,6 @@ function solve() {
   const solution = provideSolution(data);
 
   renderData(solution.simpleSolution);
-
-  console.log('detailed solution', solution.detailedSolution);
 }
 
 function provideSolution(inputData: number[][]): { detailedSolution: DetailedBoard, simpleSolution: number[][] } {
@@ -71,19 +69,14 @@ function provideSolution(inputData: number[][]): { detailedSolution: DetailedBoa
 
   function recursivelyCheckForNewDiscoveries() {
     const check3x3SquaresResult = check3x3Squares(detailedBoard);
-    console.log('after check3x3Squares', _.cloneDeep(detailedBoard));
     const checkRowsResult = checkRows(detailedBoard);
-    console.log('after checkRows', _.cloneDeep(detailedBoard));
     const checkColumnsResult = checkColumns(detailedBoard);
-    console.log('after checkColumns', _.cloneDeep(detailedBoard));
 
     const progress = [
       check3x3SquaresResult,
       checkRowsResult,
       checkColumnsResult
     ];
-
-    console.log('progress', progress);
 
     if (progress.some(Boolean)) {
       recursivelyCheckForNewDiscoveries();

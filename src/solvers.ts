@@ -49,12 +49,6 @@ function updateTiles(tileCollection: DetailedTile[]): {
   const onlyPossibleValuesResult =
     checkForValuesThatArePossibleOnlyOnOneSquareInCollection(tileCollection);
 
-  console.log(
-    'updateTiles, wasAnyProgressMade',
-    removeResult.wasAnyProgressMade ||
-    onlyPossibleValuesResult.wasAnyProgressMade,
-  );
-
   return {
     wasAnyProgressMade:
       removeResult.wasAnyProgressMade ||
@@ -105,8 +99,6 @@ function checkForValuesThatArePossibleOnlyOnOneSquareInCollection(
   let wasAnyProgressMade = false;
   let solvingSteps: SolvingStep[] = [];
   const tileCollectionCopy = JSON.parse(JSON.stringify(tileCollection));
-
-  console.log('tileCollectionCopy', tileCollectionCopy);
 
   // map each value with number of its occurences withing the collection
   const values: { [value: number]: number } = {};
