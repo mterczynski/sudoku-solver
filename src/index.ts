@@ -1,6 +1,6 @@
 import Joi from "joi";
 import _ from "lodash";
-import { check3x3Squares as solve3x3Squares, checkColumns as solveColumns, solveRows } from "./solvers";
+import { solve3x3Squares, solveColumns, solveRows } from "./solvers";
 import type { DetailedBoard } from "./types";
 import { boardSize, createMockEasySudoku } from "./utils";
 import JSON5 from 'json5'

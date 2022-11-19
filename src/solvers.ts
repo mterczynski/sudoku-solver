@@ -2,7 +2,7 @@ import _ from 'lodash';
 import type { DetailedBoard, DetailedTile, SolvingStep } from './types';
 import { boardSize, getColumn, getSquareOfTile } from './utils';
 
-export function check3x3Squares(board: DetailedBoard): boolean {
+export function solve3x3Squares(board: DetailedBoard): boolean {
   let wasAnyProgressMade = false;
   let solvingSteps: SolvingStep[] = [];
 
@@ -29,7 +29,7 @@ export function solveRows(board: DetailedBoard): boolean {
   return wasAnyProgressMade;
 }
 
-export function checkColumns(board: DetailedBoard): boolean {
+export function solveColumns(board: DetailedBoard): boolean {
   const columns = _.range(0, boardSize).map((columnIndex) =>
     getColumn(board, columnIndex),
   );
