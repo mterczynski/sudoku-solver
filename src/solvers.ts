@@ -128,6 +128,39 @@ function checkForValuesThatArePossibleOnlyOnOneSquareInCollection(
   return { wasAnyProgressMade, solvingSteps };
 }
 
+export function provideSolution(inputData: number[][]): { detailedSolution: DetailedBoard, simpleSolution: number[][] } {
+  // const boardClone = JSON.parse(JSON.stringify(inputData));
+  const detailedBoard = inputData.map(row => row.map(tile => {
+    return {
+      value: tile,
+      possibleValues: tile ? [] : range(1, boardSize + 1)
+    }
+  }));
+
+  function recursivelyCheckForNewDiscoveries() {
+    const solve3x3SquaresResult = solve3x3Squares(detailedBoard);
+    const solveRowsResult = solveRows(detailedBoard);
+    const solveColumnsResult = solveColumns(detailedBoard);
+
+    const progress = [
+      solve3x3SquaresResult,
+      solveRowsResult,
+      solveColumnsResult
+    ];
+
+    if (progress.some(Boolean)) {
+      recursivelyCheckForNewDiscoveries();
+    }
+  }
+
+  recursivelyCheckForNewDiscoveries();
+
+  return {
+    detailedSolution: detailedBoard,
+    simpleSolution: detailedBoard.map(row => row.map(tile => tile.value))
+  }
+}
+
 // this function sets the tile's value and removes that value from possibleValues of tiles in column, row and square of that tile
 function setTileValue(
   board: DetailedBoard,

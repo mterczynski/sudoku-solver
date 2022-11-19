@@ -1,0 +1,23 @@
+import { provideSolution } from "./solvers"
+import { createHardSudoku } from "./utils"
+
+describe('e2e', () => {
+  test('hard sudoku', () => {
+    const sudoku = createHardSudoku()
+    const solution = provideSolution(sudoku)
+
+    expect(solution.simpleSolution).toEqual([
+      [2, 8, 7, 1, 5, 3, 6, 9, 4],
+      [4, 3, 5, 6, 7, 9, 2, 1, 8],
+      [1, 9, 6, 8, 2, 4, 3, 7, 5],
+
+      [5, 6, 1, 3, 4, 8, 9, 2, 7],
+      [9, 2, 8, 7, 1, 5, 4, 6, 3],
+      [7, 4, 3, 2, 9, 6, 8, 5, 1],
+
+      [8, 1, 4, 9, 6, 7, 5, 3, 2],
+      [3, 7, 9, 5, 8, 2, 1, 4, 6],
+      [6, 5, 2, 4, 3, 1, 7, 8, 9],
+    ])
+  })
+})

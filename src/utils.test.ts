@@ -1,10 +1,10 @@
-import { createMockEasySudoku, getColumn, getSquareOfTile } from './utils';
+import { createEasySudoku, getColumn, getSquareOfTile } from './utils';
 import type { DetailedBoard } from './types';
 
 describe('utils', () => {
   describe('getColumn', () => {
     it('returns a column at provided index', () => {
-      const board = createMockEasySudoku();
+      const board = createEasySudoku();
       const mockDetailedBoard: DetailedBoard = board.map((row) =>
         row.map((tileValue) => ({
           value: tileValue,
@@ -20,7 +20,7 @@ describe('utils', () => {
 
   describe('getSquareOfTile', () => {
     it('returns a 3x3 square to which the provided tile belongs to', () => {
-      const board = createMockEasySudoku();
+      const board = createEasySudoku();
       const mockDetailedBoard: DetailedBoard = board.map((row) =>
         row.map((tileValue) => ({
           value: tileValue,

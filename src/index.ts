@@ -1,8 +1,8 @@
 import Joi from "joi";
 import _ from "lodash";
-import { solve3x3Squares, solveColumns, solveRows } from "./solvers";
+import { provideSolution, solve3x3Squares, solveColumns, solveRows } from "./solvers";
 import type { DetailedBoard } from "./types";
-import { boardSize, createMockEasySudoku } from "./utils";
+import { boardSize, createEasySudoku } from "./utils";
 import JSON5 from 'json5'
 
 init();
@@ -58,44 +58,11 @@ function solve() {
   renderData(solution.simpleSolution);
 }
 
-function provideSolution(inputData: number[][]): { detailedSolution: DetailedBoard, simpleSolution: number[][] } {
-  // const boardClone = JSON.parse(JSON.stringify(inputData));
-  const detailedBoard = inputData.map(row => row.map(tile => {
-    return {
-      value: tile,
-      possibleValues: tile ? [] : _.range(1, boardSize + 1)
-    }
-  }));
-
-  function recursivelyCheckForNewDiscoveries() {
-    const solve3x3SquaresResult = solve3x3Squares(detailedBoard);
-    const solveRowsResult = solveRows(detailedBoard);
-    const solveColumnsResult = solveColumns(detailedBoard);
-
-    const progress = [
-      solve3x3SquaresResult,
-      solveRowsResult,
-      solveColumnsResult
-    ];
-
-    if (progress.some(Boolean)) {
-      recursivelyCheckForNewDiscoveries();
-    }
-  }
-
-  recursivelyCheckForNewDiscoveries();
-
-  return {
-    detailedSolution: detailedBoard,
-    simpleSolution: detailedBoard.map(row => row.map(tile => tile.value))
-  }
-}
-
 function handleFillFromJSON(): void {
   const button = document.getElementById('button-fill-from-json');
 
   button?.addEventListener('click', async () => {
-    const defaultPromptValue = JSON.stringify(createMockEasySudoku())
+    const defaultPromptValue = JSON.stringify(createEasySudoku())
     const promptResult = window.prompt(`The input accepts ${boardSize}x${boardSize} array of numbers`, defaultPromptValue)!
     const filteredPromptResult = promptResult.replace(/\n/g, '').replace(/\r/g, '')
     const userInput = JSON5.parse(filteredPromptResult);
