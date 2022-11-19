@@ -1,11 +1,13 @@
 import { range } from 'lodash';
 import type { DetailedBoard, DetailedTile } from './types';
 
+export const boardSize = 9
+
 export function getColumn(
   board: DetailedBoard,
   columnIndex: number,
 ): DetailedTile[] {
-  return range(0, 9).map((rowIndex) => board[rowIndex][columnIndex]);
+  return range(0, boardSize).map((rowIndex) => board[rowIndex][columnIndex]);
 }
 
 export function getSquareOfTile(
@@ -13,8 +15,8 @@ export function getSquareOfTile(
   columnIndex: number,
   rowIndex: number,
 ): DetailedTile[] {
-  const x = columnIndex - (columnIndex % 3); // index of square's left column
-  const y = rowIndex - (rowIndex % 3); // index of square's top row
+  const x = columnIndex - (columnIndex % (boardSize / 3)); // index of square's left column
+  const y = rowIndex - (rowIndex % (boardSize / 3)); // index of square's top row
 
   return [
     board[y][x],

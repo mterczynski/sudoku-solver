@@ -2,6 +2,7 @@ import Joi from "joi";
 import _ from "lodash";
 import { check3x3Squares, checkColumns, checkRows } from "./solvers";
 import type { DetailedBoard } from "./types";
+import { boardSize } from "./utils";
 
 init();
 
@@ -16,38 +17,38 @@ export function init() {
 function generateBoard() {
   const board = document.getElementById('board')!;
 
-  for(let i=0; i<9; i++) {
-      const row = document.createElement('div');
-      row.classList.add('row');
-      board.appendChild(row);
+  for (let i = 0; i < boardSize; i++) {
+    const row = document.createElement('div');
+    row.classList.add('row');
+    board.appendChild(row);
 
-      for(let j=0; j<9; j++) {
-          const tile = document.createElement('div');
-          tile.classList.add('tile');
-          row.appendChild(tile);
+    for (let j = 0; j < boardSize; j++) {
+      const tile = document.createElement('div');
+      tile.classList.add('tile');
+      row.appendChild(tile);
 
-          const input = document.createElement('input');
-          input.classList.add('tile-input');
-          input.setAttribute('maxlength', '1');
-          input.setAttribute('pattern', "\d");
-          tile.appendChild(input);
-      }
+      const input = document.createElement('input');
+      input.classList.add('tile-input');
+      input.setAttribute('maxlength', '1');
+      input.setAttribute('pattern', "\d");
+      tile.appendChild(input);
+    }
   }
 }
 
 function solve() {
   const rows = Array.from(document.getElementsByClassName('row'));
   const data = rows.map(row => {
-      const tiles = Array.from(row.children);
-      return tiles.map(tile => {
-        const input = tile.querySelector('.tile-input') as HTMLInputElement;
-        return Number(input.value)
-      })
+    const tiles = Array.from(row.children);
+    return tiles.map(tile => {
+      const input = tile.querySelector('.tile-input') as HTMLInputElement;
+      return Number(input.value)
+    })
   });
 
   const flatData = data.flat();
 
-  if(flatData.includes(NaN)) {
+  if (flatData.includes(NaN)) {
     return window.alert('Incorrect value provided in one of the inputs');
   }
 
@@ -58,12 +59,12 @@ function solve() {
   console.log('detailed solution', solution.detailedSolution);
 }
 
-function provideSolution(inputData: number[][]): {detailedSolution: DetailedBoard, simpleSolution: number[][]} {
+function provideSolution(inputData: number[][]): { detailedSolution: DetailedBoard, simpleSolution: number[][] } {
   // const boardClone = JSON.parse(JSON.stringify(inputData));
   const detailedBoard = inputData.map(row => row.map(tile => {
     return {
       value: tile,
-      possibleValues: tile ? [] : _.range(1, 10)
+      possibleValues: tile ? [] : _.range(1, boardSize + 1)
     }
   }));
 
@@ -83,7 +84,7 @@ function provideSolution(inputData: number[][]): {detailedSolution: DetailedBoar
 
     console.log('progress', progress);
 
-    if(progress.some(Boolean)) {
+    if (progress.some(Boolean)) {
       recursivelyCheckForNewDiscoveries();
     }
   }
@@ -100,12 +101,12 @@ function handleFillFromJSON(): void {
   const button = document.getElementById('button-fill-from-json');
 
   button?.addEventListener('click', async () => {
-    const defaultPromptValue = JSON.stringify(Array(9).fill(0).map(() => Array(9).fill(0)));
-    const userInput = JSON.parse(window.prompt('The input accepts 9x9 array of numbers', defaultPromptValue)!);
+    const defaultPromptValue = JSON.stringify(Array(boardSize).fill(0).map(() => Array(boardSize).fill(0)));
+    const userInput = JSON.parse(window.prompt(`The input accepts ${boardSize}x${boardSize} array of numbers`, defaultPromptValue)!);
 
-    const schema = Joi.array().length(9).items(
-      Joi.array().length(9).items(
-        Joi.number().integer().min(0).max(9).required()
+    const schema = Joi.array().length(boardSize).items(
+      Joi.array().length(boardSize).items(
+        Joi.number().integer().min(0).max(boardSize).required()
       ).required()
     ).required();
 
@@ -128,7 +129,7 @@ function renderData(data: number[][]) {
     row.forEach((tileValue, columnIndex) => {
       const htmlTile = getHTMLTileInput(rowIndex + 1, columnIndex + 1)
 
-      if(tileValue === 0) {
+      if (tileValue === 0) {
         htmlTile.value = '';
       } else {
         htmlTile.value = tileValue + '';

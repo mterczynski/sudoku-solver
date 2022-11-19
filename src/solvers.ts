@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import type { DetailedBoard, DetailedTile, SolvingStep } from './types';
-import { getColumn, getSquareOfTile } from './utils';
+import { boardSize, getColumn, getSquareOfTile } from './utils';
 
 export function check3x3Squares(board: DetailedBoard): boolean {
   let wasAnyProgressMade = false;
   let solvingSteps: SolvingStep[] = [];
 
   // x, y - coordinates of top left square in a 3x3 square
-  for (let x = 0; x <= 6; x += 3) {
-    for (let y = 0; y <= 6; y += 3) {
+  for (let x = 0; x <= boardSize * 2 / 3; x += boardSize / 3) {
+    for (let y = 0; y <= boardSize * 2 / 3; y += boardSize / 3) {
       const tiles = getSquareOfTile(board, x, y);
 
       const updateTilesResult = updateTiles(tiles);
@@ -30,7 +30,7 @@ export function checkRows(board: DetailedBoard): boolean {
 }
 
 export function checkColumns(board: DetailedBoard): boolean {
-  const columns = _.range(0, 9).map((columnIndex) =>
+  const columns = _.range(0, boardSize).map((columnIndex) =>
     getColumn(board, columnIndex),
   );
 
@@ -52,7 +52,7 @@ function updateTiles(tileCollection: DetailedTile[]): {
   console.log(
     'updateTiles, wasAnyProgressMade',
     removeResult.wasAnyProgressMade ||
-      onlyPossibleValuesResult.wasAnyProgressMade,
+    onlyPossibleValuesResult.wasAnyProgressMade,
   );
 
   return {
@@ -145,9 +145,9 @@ function setTileValue(
   const column = getColumn(board, columnIndex);
   const square = getSquareOfTile(board, rowIndex, columnIndex);
   const updatePossibleValues = (tile: DetailedTile) =>
-    (tile.possibleValues = tile.possibleValues.filter(
-      (_value) => _value !== value,
-    ));
+  (tile.possibleValues = tile.possibleValues.filter(
+    (_value) => _value !== value,
+  ));
 
   const tile = board[rowIndex][columnIndex];
 
