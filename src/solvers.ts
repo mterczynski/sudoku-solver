@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { range } from 'lodash';
 import type { DetailedBoard, DetailedTile, SolvingStep } from './types';
 import { boardSize, getColumn, getSquareOfTile } from './utils';
 
@@ -30,7 +30,7 @@ export function solveRows(board: DetailedBoard): boolean {
 }
 
 export function solveColumns(board: DetailedBoard): boolean {
-  const columns = _.range(0, boardSize).map((columnIndex) =>
+  const columns = range(0, boardSize).map((columnIndex) =>
     getColumn(board, columnIndex),
   );
 

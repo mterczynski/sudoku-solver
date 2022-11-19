@@ -1,4 +1,4 @@
-import { solve3x3Squares, solveRows } from "./solvers"
+import { solve3x3Squares, solveRows, solveColumns } from "./solvers"
 import { createEmptyDetailedBoard } from "./testUtils"
 import type { DetailedTile } from "./types"
 
@@ -21,6 +21,25 @@ describe('solvers', () => {
       expect(checkResult).toEqual(true)
       expect(mockDetailedBoard[0][8].value).toEqual(9)
       expect(mockDetailedBoard[0][8].possibleValues).toEqual([])
+      // check if previously filled values are left untouched:
+      expect(mockDetailedBoard[0][0].value).toEqual(1)
+      expect(mockDetailedBoard[0][0].possibleValues).toEqual([])
+    })
+  })
+
+  describe('solveColumns', () => {
+    it('solves columns', () => {
+      const mockDetailedBoard = createEmptyDetailedBoard()
+
+      for (let i = 0; i < 8; i++) {
+        setTileValue(mockDetailedBoard[i][0], i + 1)
+      }
+
+      const checkResult = solveColumns(mockDetailedBoard)
+
+      expect(checkResult).toEqual(true)
+      expect(mockDetailedBoard[8][0].value).toEqual(9)
+      expect(mockDetailedBoard[8][0].possibleValues).toEqual([])
       // check if previously filled values are left untouched:
       expect(mockDetailedBoard[0][0].value).toEqual(1)
       expect(mockDetailedBoard[0][0].possibleValues).toEqual([])
