@@ -25,6 +25,23 @@ describe('solvers', () => {
       expect(mockDetailedBoard[0][0].value).toEqual(1)
       expect(mockDetailedBoard[0][0].possibleValues).toEqual([])
     })
+
+    it('rules out impossible values', () => {
+      const mockDetailedBoard = createEmptyDetailedBoard()
+
+      for (let i = 0; i < 7; i++) {
+        setTileValue(mockDetailedBoard[0][i], i + 1)
+      }
+
+      const checkResult = solveRows(mockDetailedBoard)
+
+      expect(checkResult).toEqual(true)
+      expect(mockDetailedBoard[0][7].possibleValues).toEqual([8, 9])
+      expect(mockDetailedBoard[0][8].possibleValues).toEqual([8, 9])
+      // check if previously filled values are left untouched:
+      expect(mockDetailedBoard[0][0].value).toEqual(1)
+      expect(mockDetailedBoard[0][0].possibleValues).toEqual([])
+    })
   })
 
   describe('solveColumns', () => {
@@ -40,6 +57,23 @@ describe('solvers', () => {
       expect(checkResult).toEqual(true)
       expect(mockDetailedBoard[8][0].value).toEqual(9)
       expect(mockDetailedBoard[8][0].possibleValues).toEqual([])
+      // check if previously filled values are left untouched:
+      expect(mockDetailedBoard[0][0].value).toEqual(1)
+      expect(mockDetailedBoard[0][0].possibleValues).toEqual([])
+    })
+
+    it('rules out impossible values', () => {
+      const mockDetailedBoard = createEmptyDetailedBoard()
+
+      for (let i = 0; i < 7; i++) {
+        setTileValue(mockDetailedBoard[i][0], i + 1)
+      }
+
+      const checkResult = solveColumns(mockDetailedBoard)
+
+      expect(checkResult).toEqual(true)
+      expect(mockDetailedBoard[7][0].possibleValues).toEqual([8, 9])
+      expect(mockDetailedBoard[8][0].possibleValues).toEqual([8, 9])
       // check if previously filled values are left untouched:
       expect(mockDetailedBoard[0][0].value).toEqual(1)
       expect(mockDetailedBoard[0][0].possibleValues).toEqual([])
@@ -66,6 +100,28 @@ describe('solvers', () => {
       expect(checkResult).toEqual(true)
       expect(mockDetailedBoard[2][2].value).toEqual(9)
       expect(mockDetailedBoard[2][2].possibleValues).toEqual([])
+      // check if previously filled values are left untouched:
+      expect(mockDetailedBoard[0][0].value).toEqual(1)
+      expect(mockDetailedBoard[0][0].possibleValues).toEqual([])
+    })
+
+    it('rules out impossible values', () => {
+      const mockDetailedBoard = createEmptyDetailedBoard()
+
+      setTileValue(mockDetailedBoard[0][0], 1)
+      setTileValue(mockDetailedBoard[0][1], 2)
+      setTileValue(mockDetailedBoard[0][2], 3)
+
+      setTileValue(mockDetailedBoard[1][0], 4)
+      setTileValue(mockDetailedBoard[1][1], 5)
+      setTileValue(mockDetailedBoard[1][2], 6)
+
+      const checkResult = solve3x3Squares(mockDetailedBoard)
+
+      expect(checkResult).toEqual(true)
+      expect(mockDetailedBoard[2][0].possibleValues).toEqual([7, 8, 9])
+      expect(mockDetailedBoard[2][1].possibleValues).toEqual([7, 8, 9])
+      expect(mockDetailedBoard[2][2].possibleValues).toEqual([7, 8, 9])
       // check if previously filled values are left untouched:
       expect(mockDetailedBoard[0][0].value).toEqual(1)
       expect(mockDetailedBoard[0][0].possibleValues).toEqual([])
