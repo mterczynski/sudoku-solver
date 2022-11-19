@@ -1,4 +1,4 @@
-import { range } from 'lodash';
+import { isFunction, range } from 'lodash';
 import type { DetailedBoard, DetailedTile, SolvingStep } from './types';
 import { boardSize, getColumn, getSquareOfTile } from './utils';
 
@@ -114,8 +114,10 @@ function checkForValuesThatArePossibleOnlyOnOneSquareInCollection(
     const tile = tileCollection.find((tile) =>
       tile.possibleValues.includes(uniqueValue),
     )!;
-    tile.possibleValues = [];
-    tile.value = uniqueValue;
+    if (tile) {
+      tile.possibleValues = [];
+      tile.value = uniqueValue;
+    }
 
     // todo
     // setTileValue(board, )
