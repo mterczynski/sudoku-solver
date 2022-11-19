@@ -3,6 +3,7 @@ import _ from "lodash";
 import { check3x3Squares, checkColumns, checkRows } from "./solvers";
 import type { DetailedBoard } from "./types";
 import { boardSize } from "./utils";
+import JSON5 from 'json5'
 
 init();
 
@@ -104,7 +105,7 @@ function handleFillFromJSON(): void {
     const defaultPromptValue = JSON.stringify(Array(boardSize).fill(0).map(() => Array(boardSize).fill(0)));
     const promptResult = window.prompt(`The input accepts ${boardSize}x${boardSize} array of numbers`, defaultPromptValue)!
     const filteredPromptResult = promptResult.replace(/\n/g, '').replace(/\r/g, '')
-    const userInput = JSON.parse(filteredPromptResult);
+    const userInput = JSON5.parse(filteredPromptResult);
 
     const schema = Joi.array().length(boardSize).items(
       Joi.array().length(boardSize).items(
