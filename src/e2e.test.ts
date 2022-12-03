@@ -1,7 +1,34 @@
 import { provideSolution } from "./solvers"
-import { createHardSudoku } from "./utils"
+import { createEasySudoku, createHardSudoku } from "./utils"
 
 describe('e2e', () => {
+  test('easy sudoku', () => {
+    const sudoku = [
+      [0, 0, 0, 0, 8, 0, 5, 0, 4],
+      [7, 8, 4, 1, 0, 5, 2, 0, 3],
+      [1, 2, 0, 3, 4, 6, 9, 0, 7],
+      [0, 9, 0, 0, 0, 0, 0, 4, 0],
+      [8, 0, 1, 6, 2, 0, 0, 0, 0],
+      [0, 0, 0, 9, 0, 1, 0, 0, 2],
+      [5, 1, 0, 0, 0, 0, 0, 3, 8],
+      [4, 0, 9, 0, 0, 3, 0, 2, 0],
+      [0, 0, 0, 0, 6, 0, 0, 0, 1]
+    ]
+    const solution = provideSolution(sudoku)
+
+    expect(solution.simpleSolution).toEqual([
+      [9, 3, 6, 2, 8, 7, 5, 1, 4],
+      [7, 8, 4, 1, 9, 5, 2, 6, 3],
+      [1, 2, 5, 3, 4, 6, 9, 8, 7],
+      [2, 9, 3, 7, 5, 8, 1, 4, 6],
+      [8, 5, 1, 6, 2, 4, 3, 7, 9],
+      [6, 4, 7, 9, 3, 1, 8, 5, 2],
+      [5, 1, 2, 4, 7, 9, 6, 3, 8],
+      [4, 6, 9, 8, 1, 3, 7, 2, 5],
+      [3, 7, 8, 5, 6, 2, 4, 9, 1]
+    ])
+  })
+
   test('hard sudoku', () => {
     const sudoku = createHardSudoku()
     const solution = provideSolution(sudoku)
