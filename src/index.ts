@@ -37,7 +37,7 @@ function generateBoard() {
   }
 }
 
-function solve() {
+async function solve() {
   const rows = Array.from(document.getElementsByClassName('row'));
   const data = rows.map(row => {
     const tiles = Array.from(row.children);
@@ -53,7 +53,7 @@ function solve() {
     return window.alert('Incorrect value provided in one of the inputs');
   }
 
-  const solution = provideSolution(data);
+  const solution = await provideSolution(data);
 
   renderData(solution.simpleSolution);
 }
