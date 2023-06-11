@@ -98,10 +98,6 @@ function checkForValuesThatArePossibleOnlyOnOneSquareInCollection(
 ): { wasAnyProgressMade: boolean; solvingSteps: SolvingStep[] } {
   let wasAnyProgressMade = false;
   let solvingSteps: SolvingStep[] = [];
-  const tileCollectionCopy = JSON.parse(JSON.stringify(tileCollection));
-
-  // map each value with number of its occurences withing the collection
-  const values: { [value: number]: number } = {};
 
   const possibleValues = tileCollection.flatMap((tile) => tile.possibleValues);
 
@@ -114,16 +110,14 @@ function checkForValuesThatArePossibleOnlyOnOneSquareInCollection(
     const tile = tileCollection.find((tile) =>
       tile.possibleValues.includes(uniqueValue),
     )!;
+    const tileIndex = tileCollection.indexOf(tile)
     if (tile) {
       tile.possibleValues = [];
       tile.value = uniqueValue;
+      console.log('setting tile value to', uniqueValue, tileIndex)
     }
-
-    // todo
-    // setTileValue(board, )
   });
 
-  tileCollectionCopy;
 
   return { wasAnyProgressMade, solvingSteps };
 }
@@ -138,6 +132,12 @@ export function provideSolution(inputData: number[][]): { detailedSolution: Deta
   }));
 
   function recursivelyCheckForNewDiscoveries() {
+    // function log() {
+    //   console.log((detailedBoard.map(
+    //     row => row.map(tile => tile.value).join(',')
+    //   )).join('\n'), JSON.parse(JSON.stringify(detailedBoard.map(row => row.map(tile => tile.possibleValues)))))
+    // }
+
     const solve3x3SquaresResult = solve3x3Squares(detailedBoard);
     const solveRowsResult = solveRows(detailedBoard);
     const solveColumnsResult = solveColumns(detailedBoard);
