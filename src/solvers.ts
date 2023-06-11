@@ -122,6 +122,29 @@ function checkForValuesThatArePossibleOnlyOnOneSquareInCollection(
   return { wasAnyProgressMade, solvingSteps };
 }
 
+function recursivelyCheckForNewDiscoveries(detailedBoard: DetailedBoard) {
+  // function log() {
+  //   console.log((detailedBoard.map(
+  //     row => row.map(tile => tile.value).join(',')
+  //   )).join('\n'), JSON.parse(JSON.stringify(detailedBoard.map(row => row.map(tile => tile.possibleValues)))))
+  // }
+
+  const solve3x3SquaresResult = solve3x3Squares(detailedBoard);
+  const solveRowsResult = solveRows(detailedBoard);
+  const solveColumnsResult = solveColumns(detailedBoard);
+
+  const progress = [
+    solve3x3SquaresResult,
+    solveRowsResult,
+    solveColumnsResult
+  ];
+
+  if (progress.some(Boolean)) {
+    recursivelyCheckForNewDiscoveries(detailedBoard);
+  }
+}
+
+
 export function provideSolution(inputData: number[][]): { detailedSolution: DetailedBoard, simpleSolution: number[][] } {
   // const boardClone = JSON.parse(JSON.stringify(inputData));
   const detailedBoard = inputData.map(row => row.map(tile => {
@@ -131,29 +154,7 @@ export function provideSolution(inputData: number[][]): { detailedSolution: Deta
     }
   }));
 
-  function recursivelyCheckForNewDiscoveries() {
-    // function log() {
-    //   console.log((detailedBoard.map(
-    //     row => row.map(tile => tile.value).join(',')
-    //   )).join('\n'), JSON.parse(JSON.stringify(detailedBoard.map(row => row.map(tile => tile.possibleValues)))))
-    // }
-
-    const solve3x3SquaresResult = solve3x3Squares(detailedBoard);
-    const solveRowsResult = solveRows(detailedBoard);
-    const solveColumnsResult = solveColumns(detailedBoard);
-
-    const progress = [
-      solve3x3SquaresResult,
-      solveRowsResult,
-      solveColumnsResult
-    ];
-
-    if (progress.some(Boolean)) {
-      recursivelyCheckForNewDiscoveries();
-    }
-  }
-
-  recursivelyCheckForNewDiscoveries();
+  recursivelyCheckForNewDiscoveries(detailedBoard);
 
   return {
     detailedSolution: detailedBoard,
