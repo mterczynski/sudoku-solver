@@ -1,6 +1,7 @@
 import Joi from "joi";
 import JSON5 from 'json5';
 import { boardSize, createEasySudoku } from "./utils";
+import { provideSolution } from "./solvers";
 
 export function generateBoard() {
   const board = document.getElementById('board')!;
@@ -43,7 +44,7 @@ export function parseBoardHTMLToArray() {
   return data
 }
 
-export function handleFillFromJSON(): void {
+export function addFillFromJsonClickHandler(): void {
   const button = document.getElementById('button-fill-from-json');
 
   button?.addEventListener('click', async () => {
@@ -84,4 +85,20 @@ export function renderData(data: number[][]) {
       }
     })
   });
+}
+
+export function addSolveButtonClickListener() {
+  const solveButton = document.getElementById('button-solve')!;
+  solveButton.addEventListener('click', () => solve());
+
+  async function solve() {
+    try {
+      const data = parseBoardHTMLToArray()
+      const solution = await provideSolution(data)
+
+      renderData(solution.simpleSolution)
+    } catch (err) {
+      return window.alert('Incorrect value provided in one of the inputs');
+    }
+  }
 }
