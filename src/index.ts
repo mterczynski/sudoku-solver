@@ -38,6 +38,17 @@ function generateBoard() {
 }
 
 async function solve() {
+  try {
+    const data = parseBoardHTMLToArray()
+    const solution = await provideSolution(data)
+
+    renderData(solution.simpleSolution)
+  } catch (err) {
+    return window.alert('Incorrect value provided in one of the inputs');
+  }
+}
+
+function parseBoardHTMLToArray() {
   const rows = Array.from(document.getElementsByClassName('row'));
   const data = rows.map(row => {
     const tiles = Array.from(row.children);
@@ -50,12 +61,10 @@ async function solve() {
   const flatData = data.flat();
 
   if (flatData.includes(NaN)) {
-    return window.alert('Incorrect value provided in one of the inputs');
+    throw new Error('Incorrect value provided in one of the inputs')
   }
 
-  const solution = await provideSolution(data);
-
-  renderData(solution.simpleSolution);
+  return data
 }
 
 function handleFillFromJSON(): void {
