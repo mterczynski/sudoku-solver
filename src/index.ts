@@ -1,9 +1,7 @@
 import Joi from "joi";
-import _ from "lodash";
-import { provideSolution, solve3x3Squares, solveColumns, solveRows } from "./solvers";
-import type { DetailedBoard } from "./types";
+import JSON5 from 'json5';
+import { provideSolution } from "./solvers";
 import { boardSize, createEasySudoku } from "./utils";
-import JSON5 from 'json5'
 
 init();
 
