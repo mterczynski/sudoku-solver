@@ -14,7 +14,7 @@ describe('utils', () => {
 
       const result = getColumn(mockDetailedBoard, 1);
 
-      expect(result.map((i) => i.value)).toEqual([1, 2, 0, 0, 3, 0, 0, 0, 4]);
+      expect(result.map((i) => i.value)).toEqual([0, 8, 2, 9, 0, 0, 1, 0, 0]);
     });
   });
 
@@ -33,7 +33,7 @@ describe('utils', () => {
 
       const result = getSquareOfTile(mockDetailedBoard, columnIndex, rowIndex);
 
-      expect(result.map((i) => i.value)).toEqual([0, 0, 8, 7, 2, 0, 0, 0, 0]);
+      expect(result.map((i) => i.value)).toEqual([0, 0, 0, 6, 2, 0, 9, 0, 1]);
     });
   });
 });
