@@ -5,6 +5,3 @@ import { addSolveButtonClickListener as addSolveButtonClickHandler, generateBoar
   addFillFromJsonClickHandler();
   addSolveButtonClickHandler()
 })();
-
-
-
