@@ -6,11 +6,12 @@ describe('utils', () => {
   describe('getColumn', () => {
     it('returns a column at provided index', () => {
       const board = sudokus.easy();
-      const mockBoardWithPossibleValues: BoardWithPossibleValues = board.map((row) =>
-        row.map((tileValue) => ({
-          value: tileValue,
-          possibleValues: [], // not relevant to this scenario
-        })),
+      const mockBoardWithPossibleValues: BoardWithPossibleValues = board.map(
+        (row) =>
+          row.map((tileValue) => ({
+            value: tileValue,
+            possibleValues: [], // not relevant to this scenario
+          })),
       );
 
       const result = getColumn(mockBoardWithPossibleValues, 1);
@@ -21,17 +22,22 @@ describe('utils', () => {
 
   describe('getSquareOfTile', () => {
     const board = sudokus.easy();
-    const mockBoardWithPossibleValues: BoardWithPossibleValues = board.map((row) =>
-      row.map((tileValue) => ({
-        value: tileValue,
-        possibleValues: [], // not relevant to this scenario
-      })),
+    const mockBoardWithPossibleValues: BoardWithPossibleValues = board.map(
+      (row) =>
+        row.map((tileValue) => ({
+          value: tileValue,
+          possibleValues: [], // not relevant to this scenario
+        })),
     );
     it('returns a 3x3 square to which the provided tile belongs to - top right corner', () => {
       const columnIndex = 5;
       const rowIndex = 3;
 
-      const result = getSquareOfTile(mockBoardWithPossibleValues, columnIndex, rowIndex);
+      const result = getSquareOfTile(
+        mockBoardWithPossibleValues,
+        columnIndex,
+        rowIndex,
+      );
 
       expect(result.map((i) => i.value)).toEqual([0, 0, 0, 6, 2, 0, 9, 0, 1]);
     });
@@ -40,7 +46,11 @@ describe('utils', () => {
       const columnIndex = 3;
       const rowIndex = 5;
 
-      const result = getSquareOfTile(mockBoardWithPossibleValues, columnIndex, rowIndex);
+      const result = getSquareOfTile(
+        mockBoardWithPossibleValues,
+        columnIndex,
+        rowIndex,
+      );
 
       expect(result.map((i) => i.value)).toEqual([0, 0, 0, 6, 2, 0, 9, 0, 1]);
     });

@@ -1,10 +1,10 @@
-import { provideSolutionForCustomBoard } from "./solvers"
-import { sudokus } from "./sudokus"
+import { provideSolutionForCustomBoard } from './solvers';
+import { sudokus } from './sudokus';
 
 describe('e2e', () => {
   test('easy sudoku', () => {
-    const sudoku = sudokus.easy()
-    const solution = provideSolutionForCustomBoard(sudoku)
+    const sudoku = sudokus.easy();
+    const solution = provideSolutionForCustomBoard(sudoku);
 
     expect(solution.simpleSolution).toEqual([
       [9, 3, 6, 2, 8, 7, 5, 1, 4],
@@ -15,13 +15,13 @@ describe('e2e', () => {
       [6, 4, 7, 9, 3, 1, 8, 5, 2],
       [5, 1, 2, 4, 7, 9, 6, 3, 8],
       [4, 6, 9, 8, 1, 3, 7, 2, 5],
-      [3, 7, 8, 5, 6, 2, 4, 9, 1]
-    ])
-  })
+      [3, 7, 8, 5, 6, 2, 4, 9, 1],
+    ]);
+  });
 
   test('hard sudoku', () => {
-    const sudoku = sudokus.hard()
-    const solution = provideSolutionForCustomBoard(sudoku)
+    const sudoku = sudokus.hard();
+    const solution = provideSolutionForCustomBoard(sudoku);
 
     expect(solution.simpleSolution).toEqual([
       [2, 8, 7, 1, 5, 3, 6, 9, 4],
@@ -35,6 +35,6 @@ describe('e2e', () => {
       [8, 1, 4, 9, 6, 7, 5, 3, 2],
       [3, 7, 9, 5, 8, 2, 1, 4, 6],
       [6, 5, 2, 4, 3, 1, 7, 8, 9],
-    ])
-  })
-})
+    ]);
+  });
+});

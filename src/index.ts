@@ -1,6 +1,6 @@
-import { addButtonClickHandlers, generateBoard } from "./htmlHandlers";
+import { addButtonClickHandlers, generateBoard } from './htmlHandlers';
 
 (function init() {
   generateBoard();
-  addButtonClickHandlers()
+  addButtonClickHandlers();
 })();

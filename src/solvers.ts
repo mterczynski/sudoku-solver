@@ -1,15 +1,24 @@
 import _, { range } from 'lodash';
 import { State } from './state';
-import type { BoardWithPossibleValues, SolvingStep, TileWithPossibleValues } from './types';
-import { boardSize, getColumn, getSquareOfTile, mapBoardToBoardWithPossibleValues } from './utils';
+import type {
+  BoardWithPossibleValues,
+  SolvingStep,
+  TileWithPossibleValues,
+} from './types';
+import {
+  boardSize,
+  getColumn,
+  getSquareOfTile,
+  mapBoardToBoardWithPossibleValues,
+} from './utils';
 
 export function solve3x3Squares(board: BoardWithPossibleValues): boolean {
   let wasAnyProgressMade = false;
   let solvingSteps: SolvingStep[] = [];
 
   // x, y - coordinates of top left square in a 3x3 square
-  for (let x = 0; x <= boardSize * 2 / 3; x += boardSize / 3) {
-    for (let y = 0; y <= boardSize * 2 / 3; y += boardSize / 3) {
+  for (let x = 0; x <= (boardSize * 2) / 3; x += boardSize / 3) {
+    for (let y = 0; y <= (boardSize * 2) / 3; y += boardSize / 3) {
       const tiles = getSquareOfTile(board, x, y);
 
       const updateTilesResult = updateTiles(tiles);
@@ -35,7 +44,7 @@ export function solveColumns(board: BoardWithPossibleValues): boolean {
     getColumn(board, columnIndex),
   );
 
-  debugger
+  debugger;
 
   let wasAnyProgressMade = columns
     .map((columns) => updateTiles(columns))
@@ -48,7 +57,7 @@ function updateTiles(tileCollection: TileWithPossibleValues[]): {
   wasAnyProgressMade: boolean;
   solvingSteps: SolvingStep[];
 } {
-  debugger
+  debugger;
   const removeResult = removeImpossibleItemsFromPossibleValues(tileCollection);
   const onlyPossibleValuesResult =
     checkForValuesThatArePossibleOnlyOnOneSquareInCollection(tileCollection);
@@ -91,9 +100,11 @@ function removeImpossibleItemsFromPossibleValues(
       wasAnyProgressMade = true;
       tile.value = tile.possibleValues[0];
       tile.possibleValues = [];
-      tileCollection.forEach(_tile => {
-        _tile.possibleValues = _tile.possibleValues.filter(value => value !== tile.value)
-      })
+      tileCollection.forEach((_tile) => {
+        _tile.possibleValues = _tile.possibleValues.filter(
+          (value) => value !== tile.value,
+        );
+      });
     }
   });
 
@@ -117,64 +128,65 @@ function checkForValuesThatArePossibleOnlyOnOneSquareInCollection(
     const tile = tileCollection.find((tile) =>
       tile.possibleValues.includes(uniqueValue),
     )!;
-    const tileIndex = tileCollection.indexOf(tile)
+    const tileIndex = tileCollection.indexOf(tile);
     if (tile) {
       tile.possibleValues = [];
       tile.value = uniqueValue;
     }
   });
 
-
   return { wasAnyProgressMade, solvingSteps };
 }
 
-function recursivelyCheckForNewDiscoveries(boardWithPossibleValues: BoardWithPossibleValues) {
+function recursivelyCheckForNewDiscoveries(
+  boardWithPossibleValues: BoardWithPossibleValues,
+) {
   const solve3x3SquaresResult = solve3x3Squares(boardWithPossibleValues);
   const solveRowsResult = solveRows(boardWithPossibleValues);
   const solveColumnsResult = solveColumns(boardWithPossibleValues);
 
-  const progress = [
-    solve3x3SquaresResult,
-    solveRowsResult,
-    solveColumnsResult
-  ];
+  const progress = [solve3x3SquaresResult, solveRowsResult, solveColumnsResult];
 
   if (progress.some(Boolean)) {
     recursivelyCheckForNewDiscoveries(boardWithPossibleValues);
   }
 
-  console.log('##', boardWithPossibleValues)
+  console.log('##', boardWithPossibleValues);
 
-  return boardWithPossibleValues
+  return boardWithPossibleValues;
 }
 
-
-export function provideSolution()
-// :{ detailedSolution: BoardWithPossibleValues, simpleSolution: number[][] }
-{
+export function provideSolution() {
+  // :{ detailedSolution: BoardWithPossibleValues, simpleSolution: number[][] }
   // const boardClone = JSON.parse(JSON.stringify(inputData));
-  State.setBoardWithPossibleValues(recursivelyCheckForNewDiscoveries(State.getBoardWithPossibleValues()));
+  State.setBoardWithPossibleValues(
+    recursivelyCheckForNewDiscoveries(State.getBoardWithPossibleValues()),
+  );
 
   return {
     detailedSolution: State.getBoardWithPossibleValues(),
     // @ts-ignore
-    simpleSolution: State.getBoardWithPossibleValues().map(row => row.map(tile => tile.value))
-  }
+    simpleSolution: State.getBoardWithPossibleValues().map((row) =>
+      row.map((tile) => tile.value),
+    ),
+  };
 }
 
-export function provideSolutionForCustomBoard(board: number[][])
-// :{ detailedSolution: BoardWithPossibleValues, simpleSolution: number[][] }
-{
+export function provideSolutionForCustomBoard(board: number[][]) {
+  // :{ detailedSolution: BoardWithPossibleValues, simpleSolution: number[][] }
   // const boardClone = JSON.parse(JSON.stringify(inputData));
-  State.setBoardWithPossibleValues(recursivelyCheckForNewDiscoveries(mapBoardToBoardWithPossibleValues(board)));
+  State.setBoardWithPossibleValues(
+    recursivelyCheckForNewDiscoveries(mapBoardToBoardWithPossibleValues(board)),
+  );
 
   return {
     detailedSolution: State.getBoardWithPossibleValues(),
     // @ts-ignore
-    simpleSolution: State.getBoardWithPossibleValues().map(row => row.map(tile => tile.value))
-  }
+    simpleSolution: State.getBoardWithPossibleValues().map((row) =>
+      row.map((tile) => tile.value),
+    ),
+  };
 }
-
 
 // this function sets the tile's value and removes that value from possibleValues of tiles in column, row and square of that tile
 // function setTileValue(

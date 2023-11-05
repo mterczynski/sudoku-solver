@@ -1,7 +1,7 @@
 import { range } from 'lodash';
 import type { BoardWithPossibleValues, TileWithPossibleValues } from './types';
 
-export const boardSize = 9
+export const boardSize = 9;
 
 export function getColumn(
   board: BoardWithPossibleValues,
@@ -10,19 +10,27 @@ export function getColumn(
   return range(0, boardSize).map((rowIndex) => board[rowIndex][columnIndex]);
 }
 
-export function mapBoardToBoardWithPossibleValues(board: number[][]): BoardWithPossibleValues {
-  return board.map(row => row.map(tile => {
-    return {
-      value: tile,
-      possibleValues: tile ? [] : range(1, boardSize + 1)
-    }
-  }));
+export function mapBoardToBoardWithPossibleValues(
+  board: number[][],
+): BoardWithPossibleValues {
+  return board.map((row) =>
+    row.map((tile) => {
+      return {
+        value: tile,
+        possibleValues: tile ? [] : range(1, boardSize + 1),
+      };
+    }),
+  );
 }
 
-export function mapBoardWithPossibleValuesToBoard(board: BoardWithPossibleValues): number[][] {
-  return board.map(row => row.map(tile => {
-    return tile.value
-  }));
+export function mapBoardWithPossibleValuesToBoard(
+  board: BoardWithPossibleValues,
+): number[][] {
+  return board.map((row) =>
+    row.map((tile) => {
+      return tile.value;
+    }),
+  );
 }
 
 export function getSquareOfTile(
