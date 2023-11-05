@@ -3,7 +3,7 @@ import JSON5 from 'json5';
 import { provideSolution, solve3x3Squares, solveColumns, solveRows } from "./solvers";
 import { State } from "./state";
 import { boardSize, mapBoardToBoardWithPossibleValues, mapBoardWithPossibleValuesToBoard } from "./utils";
-import { createEasySudoku } from "./sudokus";
+import { sudokus } from "./sudokus";
 
 export function generateBoard() {
   const board = document.getElementById('board')!;
@@ -55,7 +55,7 @@ export function addFillFromJsonClickHandler(): void {
   const button = document.getElementById('button-fill-from-json');
 
   button?.addEventListener('click', async () => {
-    const defaultPromptValue = JSON.stringify(createEasySudoku())
+    const defaultPromptValue = JSON.stringify(sudokus.easy())
     const promptResult = window.prompt(`The input accepts ${boardSize}x${boardSize} array of numbers`, defaultPromptValue)!
     const filteredPromptResult = promptResult.replace(/\n/g, '').replace(/\r/g, '')
     const userInput = JSON5.parse(filteredPromptResult);

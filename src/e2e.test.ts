@@ -1,9 +1,9 @@
 import { provideSolutionForCustomBoard } from "./solvers"
-import { createEasySudoku, createHardSudoku } from "./sudokus"
+import { sudokus } from "./sudokus"
 
 describe('e2e', () => {
   test('easy sudoku', () => {
-    const sudoku = createEasySudoku()
+    const sudoku = sudokus.easy()
     const solution = provideSolutionForCustomBoard(sudoku)
 
     expect(solution.simpleSolution).toEqual([
@@ -20,7 +20,7 @@ describe('e2e', () => {
   })
 
   test('hard sudoku', () => {
-    const sudoku = createHardSudoku()
+    const sudoku = sudokus.hard()
     const solution = provideSolutionForCustomBoard(sudoku)
 
     expect(solution.simpleSolution).toEqual([

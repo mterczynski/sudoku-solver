@@ -1,11 +1,11 @@
 import { getColumn, getSquareOfTile } from './utils';
 import type { BoardWithPossibleValues } from './types';
-import { createEasySudoku } from './sudokus';
+import { sudokus } from './sudokus';
 
 describe('utils', () => {
   describe('getColumn', () => {
     it('returns a column at provided index', () => {
-      const board = createEasySudoku();
+      const board = sudokus.easy();
       const mockBoardWithPossibleValues: BoardWithPossibleValues = board.map((row) =>
         row.map((tileValue) => ({
           value: tileValue,
@@ -20,7 +20,7 @@ describe('utils', () => {
   });
 
   describe('getSquareOfTile', () => {
-    const board = createEasySudoku();
+    const board = sudokus.easy();
     const mockBoardWithPossibleValues: BoardWithPossibleValues = board.map((row) =>
       row.map((tileValue) => ({
         value: tileValue,
