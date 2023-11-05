@@ -93,7 +93,7 @@ function addFillFromJsonClickHandler(): void {
   const button = document.getElementById('button-fill-from-json');
 
   button?.addEventListener('click', async () => {
-    const defaultPromptValue = JSON.stringify(sudokus.easy());
+    const defaultPromptValue = JSON.stringify(sudokus.medium());
     const promptResult = window.prompt(
       `The input accepts ${boardSize}x${boardSize} array of numbers`,
       defaultPromptValue,
