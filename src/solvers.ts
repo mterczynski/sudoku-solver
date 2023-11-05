@@ -148,8 +148,6 @@ function recursivelyCheckForNewDiscoveries(
     recursivelyCheckForNewDiscoveries(boardWithPossibleValues);
   }
 
-  console.log('##', boardWithPossibleValues);
-
   return boardWithPossibleValues;
 }
 
