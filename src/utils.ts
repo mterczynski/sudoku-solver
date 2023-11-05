@@ -29,25 +29,19 @@ export function getSquareOfTile(
   board: BoardWithPossibleValues,
   columnIndex: number,
   rowIndex: number,
-  // @ts-ignore
 ): TileWithPossibleValues[] {
-  try {
-    const x = columnIndex - (columnIndex % (boardSize / 3)); // index of square's left column
-    const y = rowIndex - (rowIndex % (boardSize / 3)); // index of square's top row
+  const x = columnIndex - (columnIndex % (boardSize / 3)); // index of square's left column
+  const y = rowIndex - (rowIndex % (boardSize / 3)); // index of square's top row
 
-    return [
-      board[y][x],
-      board[y][x + 1],
-      board[y][x + 2],
-      board[y + 1][x],
-      board[y + 1][x + 1],
-      board[y + 1][x + 2],
-      board[y + 2][x],
-      board[y + 2][x + 1],
-      board[y + 2][x + 2],
-    ];
-  } catch (e) {
-    debugger
-  }
-
+  return [
+    board[y][x],
+    board[y][x + 1],
+    board[y][x + 2],
+    board[y + 1][x],
+    board[y + 1][x + 1],
+    board[y + 1][x + 2],
+    board[y + 2][x],
+    board[y + 2][x + 1],
+    board[y + 2][x + 2],
+  ];
 }
