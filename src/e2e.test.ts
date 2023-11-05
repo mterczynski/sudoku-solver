@@ -1,10 +1,10 @@
-import { provideSolution } from "./solvers"
+import { provideSolution, provideSolutionForCustomBoard } from "./solvers"
 import { createEasySudoku, createHardSudoku } from "./utils"
 
 describe('e2e', () => {
   test('easy sudoku', () => {
     const sudoku = createEasySudoku()
-    const solution = provideSolution(sudoku)
+    const solution = provideSolutionForCustomBoard(sudoku)
 
     expect(solution.simpleSolution).toEqual([
       [9, 3, 6, 2, 8, 7, 5, 1, 4],
@@ -21,7 +21,7 @@ describe('e2e', () => {
 
   test('hard sudoku', () => {
     const sudoku = createHardSudoku()
-    const solution = provideSolution(sudoku)
+    const solution = provideSolutionForCustomBoard(sudoku)
 
     expect(solution.simpleSolution).toEqual([
       [2, 8, 7, 1, 5, 3, 6, 9, 4],

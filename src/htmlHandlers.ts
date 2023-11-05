@@ -24,8 +24,6 @@ export function generateBoard() {
 
       tile.addEventListener('input', () => {
         State.setBoardWithPossibleValues(mapBoardToBoardWithPossibleValues(parseBoardHTMLToArray()))
-
-        console.log('board', State.getBoardWithPossibleValues())
       })
 
       tile.appendChild(input);

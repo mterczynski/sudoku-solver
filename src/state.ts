@@ -10,7 +10,6 @@ export class State {
   }
 
   static setBoardWithPossibleValues(boardWithPossibleValues: BoardWithPossibleValues) {
-    console.log('setBoardWithPossibleValues called with', _.cloneDeep(boardWithPossibleValues))
     this.boardWithPossibleValues = boardWithPossibleValues
   }
 }
