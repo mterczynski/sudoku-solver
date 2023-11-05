@@ -1,8 +1,9 @@
 import Joi from "joi";
 import JSON5 from 'json5';
-import { boardSize, createEasySudoku, mapBoardToBoardWithPossibleValues, mapBoardWithPossibleValuesToBoard } from "./utils";
 import { provideSolution, solve3x3Squares, solveColumns, solveRows } from "./solvers";
 import { State } from "./state";
+import { boardSize, mapBoardToBoardWithPossibleValues, mapBoardWithPossibleValuesToBoard } from "./utils";
+import { createEasySudoku } from "./sudokus";
 
 export function generateBoard() {
   const board = document.getElementById('board')!;

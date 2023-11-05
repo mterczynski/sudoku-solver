@@ -1,5 +1,5 @@
-import { provideSolution, provideSolutionForCustomBoard } from "./solvers"
-import { createEasySudoku, createHardSudoku } from "./utils"
+import { provideSolutionForCustomBoard } from "./solvers"
+import { createEasySudoku, createHardSudoku } from "./sudokus"
 
 describe('e2e', () => {
   test('easy sudoku', () => {

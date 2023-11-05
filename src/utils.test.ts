@@ -1,5 +1,6 @@
-import { createEasySudoku, getColumn, getSquareOfTile } from './utils';
+import { getColumn, getSquareOfTile } from './utils';
 import type { BoardWithPossibleValues } from './types';
+import { createEasySudoku } from './sudokus';
 
 describe('utils', () => {
   describe('getColumn', () => {
