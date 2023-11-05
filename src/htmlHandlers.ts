@@ -51,7 +51,31 @@ export function parseBoardHTMLToArray() {
   return data
 }
 
-export function addFillFromJsonClickHandler(): void {
+export function addButtonClickHandlers() {
+  addFillFromJsonClickHandler();
+  addClearButtonHandler();
+  addSolveButtonsClickHandlers()
+}
+
+export function getHTMLTileInput(rowIndex: number, columnIndex: number) {
+  return document.querySelector(`.board > :nth-child(${rowIndex}) > :nth-child(${columnIndex}) .tile-input`) as HTMLInputElement;
+}
+
+export function renderData(data: number[][]) {
+  data.forEach((row, rowIndex) => {
+    row.forEach((tileValue, columnIndex) => {
+      const htmlTile = getHTMLTileInput(rowIndex + 1, columnIndex + 1)
+
+      if (tileValue === 0) {
+        htmlTile.value = '';
+      } else {
+        htmlTile.value = tileValue + '';
+      }
+    })
+  });
+}
+
+function addFillFromJsonClickHandler(): void {
   const button = document.getElementById('button-fill-from-json');
 
   button?.addEventListener('click', async () => {
@@ -77,27 +101,27 @@ export function addFillFromJsonClickHandler(): void {
   });
 }
 
-export function getHTMLTileInput(rowIndex: number, columnIndex: number) {
-  return document.querySelector(`.board > :nth-child(${rowIndex}) > :nth-child(${columnIndex}) .tile-input`) as HTMLInputElement;
-}
+function addClearButtonHandler() {
+  const button = document.getElementById('button-clear');
 
-export function renderData(data: number[][]) {
-  data.forEach((row, rowIndex) => {
-    row.forEach((tileValue, columnIndex) => {
-      const htmlTile = getHTMLTileInput(rowIndex + 1, columnIndex + 1)
+  button?.addEventListener('click', async () => {
+    const data: number[][] = [Array(9)].map(() => [])
 
-      if (tileValue === 0) {
-        htmlTile.value = '';
-      } else {
-        htmlTile.value = tileValue + '';
-      }
-    })
+    renderData(data);
+    State.setBoardWithPossibleValues(mapBoardToBoardWithPossibleValues(data))
   });
 }
 
-export function addSolveButtonsClickListeners() {
+function addSolveButtonsClickHandlers() {
   const solveButton = document.getElementById('button-solve')!;
-  solveButton.addEventListener('click', () => solve());
+  solveButton.addEventListener('click', () => {
+    try {
+      provideSolution()
+      renderData(mapBoardWithPossibleValuesToBoard(State.getBoardWithPossibleValues()))
+    } catch (err) {
+      return window.alert('Incorrect value provided in one of the inputs');
+    }
+  });
 
   const solveColumnsButton = document.getElementById('button-solve-columns')!;
   solveColumnsButton.addEventListener('click', () => {
@@ -116,14 +140,4 @@ export function addSolveButtonsClickListeners() {
     solve3x3Squares(State.getBoardWithPossibleValues())
     renderData(mapBoardWithPossibleValuesToBoard(State.getBoardWithPossibleValues()));
   });
-}
-
-async function solve() {
-  try {
-    const solution = await provideSolution()!
-
-    renderData(mapBoardWithPossibleValuesToBoard(State.getBoardWithPossibleValues()))
-  } catch (err) {
-    return window.alert('Incorrect value provided in one of the inputs');
-  }
 }

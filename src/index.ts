@@ -1,7 +1,6 @@
-import { addFillFromJsonClickHandler, addSolveButtonsClickListeners as addSolveButtonClickHandler, generateBoard } from "./htmlHandlers";
+import { addButtonClickHandlers, generateBoard } from "./htmlHandlers";
 
 (function init() {
   generateBoard();
-  addFillFromJsonClickHandler();
-  addSolveButtonClickHandler()
+  addButtonClickHandlers()
 })();
