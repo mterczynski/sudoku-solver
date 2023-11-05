@@ -4,6 +4,7 @@ import { provideSolution, solve3x3Squares, solveColumns, solveRows } from "./sol
 import { State } from "./state";
 import { boardSize, mapBoardToBoardWithPossibleValues, mapBoardWithPossibleValuesToBoard } from "./utils";
 import { sudokus } from "./sudokus";
+import { createEmptyBoardWithPossibleValues } from "./testUtils";
 
 export function generateBoard() {
   const board = document.getElementById('board')!;
@@ -105,7 +106,7 @@ function addClearButtonHandler() {
   const button = document.getElementById('button-clear');
 
   button?.addEventListener('click', async () => {
-    const data: number[][] = [Array(9)].map(() => [])
+    const data = mapBoardWithPossibleValuesToBoard(createEmptyBoardWithPossibleValues())
 
     renderData(data);
     State.setBoardWithPossibleValues(mapBoardToBoardWithPossibleValues(data))
