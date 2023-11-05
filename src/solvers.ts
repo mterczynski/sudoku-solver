@@ -44,8 +44,6 @@ export function solveColumns(board: BoardWithPossibleValues): boolean {
     getColumn(board, columnIndex),
   );
 
-  debugger;
-
   let wasAnyProgressMade = columns
     .map((columns) => updateTiles(columns))
     .some(({ wasAnyProgressMade }) => wasAnyProgressMade);
@@ -57,7 +55,6 @@ function updateTiles(tileCollection: TileWithPossibleValues[]): {
   wasAnyProgressMade: boolean;
   solvingSteps: SolvingStep[];
 } {
-  debugger;
   const removeResult = removeImpossibleItemsFromPossibleValues(tileCollection);
   const onlyPossibleValuesResult =
     checkForValuesThatArePossibleOnlyOnOneSquareInCollection(tileCollection);
