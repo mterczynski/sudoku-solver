@@ -1,7 +1,8 @@
 import Joi from "joi";
 import JSON5 from 'json5';
-import { boardSize, createEasySudoku } from "./utils";
-import { provideSolution } from "./solvers";
+import { boardSize, createEasySudoku, mapBoardToBoardWithPossibleValues, mapBoardWithPossibleValuesToBoard } from "./utils";
+import { provideSolution, solve3x3Squares, solveColumns, solveRows } from "./solvers";
+import { State } from "./state";
 
 export function generateBoard() {
   const board = document.getElementById('board')!;
@@ -20,6 +21,13 @@ export function generateBoard() {
       input.classList.add('tile-input');
       input.setAttribute('maxlength', '1');
       input.setAttribute('pattern', "\d");
+
+      tile.addEventListener('input', () => {
+        State.setBoardWithPossibleValues(mapBoardToBoardWithPossibleValues(parseBoardHTMLToArray()))
+
+        console.log('board', State.getBoardWithPossibleValues())
+      })
+
       tile.appendChild(input);
     }
   }
@@ -63,6 +71,7 @@ export function addFillFromJsonClickHandler(): void {
       const data: number[][] = await Joi.attempt(userInput, schema);
 
       renderData(data);
+      State.setBoardWithPossibleValues(mapBoardToBoardWithPossibleValues(data))
     } catch (error) {
       alert(`Invalid data ${error}`);
     }
@@ -87,18 +96,35 @@ export function renderData(data: number[][]) {
   });
 }
 
-export function addSolveButtonClickListener() {
+export function addSolveButtonsClickListeners() {
   const solveButton = document.getElementById('button-solve')!;
   solveButton.addEventListener('click', () => solve());
 
-  async function solve() {
-    try {
-      const data = parseBoardHTMLToArray()
-      const solution = await provideSolution(data)
+  const solveColumnsButton = document.getElementById('button-solve-columns')!;
+  solveColumnsButton.addEventListener('click', () => {
+    solveColumns(State.getBoardWithPossibleValues())
+    renderData(mapBoardWithPossibleValuesToBoard(State.getBoardWithPossibleValues()));
+  });
 
-      renderData(solution.simpleSolution)
-    } catch (err) {
-      return window.alert('Incorrect value provided in one of the inputs');
-    }
+  const solveRowsButton = document.getElementById('button-solve-rows')!;
+  solveRowsButton.addEventListener('click', () => {
+    solveRows(State.getBoardWithPossibleValues())
+    renderData(mapBoardWithPossibleValuesToBoard(State.getBoardWithPossibleValues()));
+  });
+
+  const solveSquaresButton = document.getElementById('button-solve-squares')!;
+  solveSquaresButton.addEventListener('click', () => {
+    solve3x3Squares(State.getBoardWithPossibleValues())
+    renderData(mapBoardWithPossibleValuesToBoard(State.getBoardWithPossibleValues()));
+  });
+}
+
+async function solve() {
+  try {
+    const solution = await provideSolution()!
+
+    renderData(mapBoardWithPossibleValuesToBoard(State.getBoardWithPossibleValues()))
+  } catch (err) {
+    return window.alert('Incorrect value provided in one of the inputs');
   }
 }

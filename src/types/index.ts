@@ -1,9 +1,9 @@
-export interface DetailedTile {
+export interface TileWithPossibleValues {
   value: number;
   possibleValues: number[];
 }
 
-export type DetailedBoard = DetailedTile[][];
+export type BoardWithPossibleValues = TileWithPossibleValues[][];
 
 enum SolvingStepType {
   Solve = 'Solve',

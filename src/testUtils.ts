@@ -1,15 +1,15 @@
-import type { DetailedBoard, DetailedTile } from "./types";
+import type { BoardWithPossibleValues, TileWithPossibleValues } from "./types";
 import { boardSize } from "./utils";
 
-function createDetailedTile(value: number): DetailedTile {
+function createTileWithPossibleValues(value: number): TileWithPossibleValues {
   return {
     value,
     possibleValues: value ? [] : [1, 2, 3, 4, 5, 6, 7, 8, 9]
   }
 }
 
-export function createEmptyDetailedBoard(): DetailedBoard {
+export function createEmptyBoardWithPossibleValues(): BoardWithPossibleValues {
   return Array(boardSize).fill(null).map(() =>
-    Array(boardSize).fill(null).map(() => createDetailedTile(0))
+    Array(boardSize).fill(null).map(() => createTileWithPossibleValues(0))
   )
 }
