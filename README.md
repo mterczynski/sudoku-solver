@@ -2,7 +2,7 @@
 
 ## About
 
-Type in the sudoku and let the program solve it for you
+Type in the sudoku and let the program solve it for you. Solves easy and medium sudokus
 
 ## Available Scripts
 
